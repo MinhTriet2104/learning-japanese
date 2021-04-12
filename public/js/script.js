@@ -17,16 +17,51 @@ document.addEventListener("DOMContentLoaded", function() {
     'や',       'ゆ',      'よ',
     'ら', 'り', 'る', 'れ', 'ろ',
     'わ',                  'を', 'ん',
+  ];
 
+  const hiraganaWithTenTenAndMaruArray = [
     'が', 'ぎ', 'ぐ', 'げ', 'ご',
     'ざ', 'じ', 'ず', 'ぜ', 'ぞ',
     'だ', 'ぢ', 'づ', 'で', 'ど',
     'ば', 'び', 'ぶ', 'べ', 'ぼ',
-    'ぱ', 'ぴ', 'ぷ', 'ぺ', 'ぽ'
- 
-    // 'ぁ', 'ぃ', 'ぅ', 'ぇ', 'ぉ'
+    'ぱ', 'ぴ', 'ぷ', 'ぺ', 'ぽ',
   ];
-  let hiraganaLength = hiraganaArray.length;
+
+  const hiraganaCombinationArray = [
+    // ki
+    'きゃ', 'きゅ', 'きょ', 
+    // shi
+    'しゃ', 'しゅ', 'しょ', 
+    // chi
+    'ちゃ', 'ちゅ', 'ちょ', 
+    // ni
+    'にゃ', 'にゅ', 'にょ', 
+    // hi
+    'ひゃ', 'ひゅ', 'ひょ', 
+    // mi
+    'みゃ', 'みゅ', 'みょ', 
+    // ri
+    'りゃ', 'りゅ', 'りょ', 
+    // gi
+    'ぎゃ', 'ぎゅ', 'ぎょ',
+    // ji 
+    'じゃ', 'じゅ', 'じょ', 
+    // ji
+    'ぢゃ', 'ぢゅ', 'ぢょ', 
+    // bi
+    'びゃ', 'びゅ', 'びょ', 
+    // pi
+    'ぴゃ', 'ぴゅ', 'ぴょ', 
+  ];
+
+  const hiraganaLength = hiraganaArray.length;
+  const hiraganaWithTentenAndMaruLength = hiraganaWithTenTenAndMaruArray.length;
+  const hiraganaCombinationLength = hiraganaCombinationArray.length;
+
+  // array use to random when play
+  let generateArray = [];
+  // array use to compare with input
+  let romajiArray = [];
 
   const quoteDisplayElement = document.getElementById("quoteDisplay");
   const quoteInputElement = document.getElementById("quoteInput");
@@ -37,6 +72,7 @@ document.addEventListener("DOMContentLoaded", function() {
   const saveSettingButton = document.getElementById("saveSetting");
 
   const tentenAndMaruCheckbox = document.getElementById('enableTenTenAndMaru');
+  const combinationCheckbox = document.getElementById('enableCombination');
   const timeLimitCheckbox = document.getElementById('enableTimeLimit');
 
   if (localStorage.getItem('tentenmaru')) {
@@ -45,7 +81,11 @@ document.addEventListener("DOMContentLoaded", function() {
     tentenAndMaruCheckbox.checked = true;
   }
 
-  let romajiArray = [];
+  if (localStorage.getItem('combination')) {
+    combinationCheckbox.checked = (localStorage.getItem('combination') === 'true');
+  } else {
+    combinationCheckbox.checked = true;
+  }
 
   // Handle Ready
   readyButton.addEventListener("click", () => {
@@ -69,30 +109,46 @@ document.addEventListener("DOMContentLoaded", function() {
 
     async function renderNewQuote() {
       // clear array
+      generateArray.length = 0;
       romajiArray.length = 0;
-      // const quote = await getRandomQuote();
-      const quoteWordLength = getRandomIntInclusive(4, 6);
 
+      generateArray = hiraganaArray;
+      if (tentenAndMaruCheckbox.checked) {
+        generateArray = [...generateArray, ...hiraganaWithTenTenAndMaruArray];
+      }
+      if (combinationCheckbox.checked) {
+        generateArray = [...generateArray, ...hiraganaCombinationArray];
+      }
+      const generateArrayLength = generateArray.length;
+
+      // const quote = await getRandomQuote();
+      const quoteWordLength = getRandomIntInclusive(5, 7);
+
+      const arrayToCheck = [];
       let quote = "";
       for (let i = 0; i < quoteWordLength; i++) {
         const quoteTextLength = getRandomIntInclusive(2, 5);
         for (let j = 0; j < quoteTextLength; j++) {
-          const randomHiraganaIndex = getRandomIntInclusive(0, hiraganaLength - 1);
-          const hiraganaWord = hiraganaArray[randomHiraganaIndex];
+          const randomIndex = getRandomIntInclusive(0, generateArrayLength - 1);
+          const hiraganaWord = generateArray[randomIndex];
           quote += hiraganaWord;
+
+          arrayToCheck.push(hiraganaWord);
           romajiArray.push(wanakana.toRomaji(hiraganaWord));
         }
         if (i !== quoteWordLength - 1) {
           quote += " ";
+          arrayToCheck.push(" ");
           romajiArray.push(" ");
         }
       }
-      quote += "."
+      quote += ".";
+      arrayToCheck.push(".");
       romajiArray.push(".");
 
       fail = 0;
       quoteDisplayElement.innerHTML = "";
-      quote.split("").forEach(char => {
+      arrayToCheck.forEach(char => {
         const charSpan = document.createElement("span");
         charSpan.innerText = char;
         quoteDisplayElement.appendChild(charSpan);
@@ -181,12 +237,16 @@ document.addEventListener("DOMContentLoaded", function() {
 
   // Handle Setting
   saveSettingButton.addEventListener("click", () => {
-    if (!tentenAndMaruCheckbox.checked) {
-      hiraganaLength = hiraganaLength - 25;
-      localStorage.setItem('tentenmaru', false);
+    if (tentenAndMaruCheckbox.checked) {
+      localStorage.setItem('tentenmaru', true);
     } else {
-      hiraganaLength = hiraganaArray.length;
       localStorage.setItem('tentenmaru', false);
+    }
+
+    if (combinationCheckbox.checked) {
+      localStorage.setItem('combination', true);
+    } else {
+      localStorage.setItem('combination', false);
     }
   });
 });

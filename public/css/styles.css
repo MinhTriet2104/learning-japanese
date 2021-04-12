@@ -29,6 +29,18 @@ body,
   align-items: center;
 }
 
+#help {
+  position: absolute;
+  background-color: #dc3545;
+  width: 100px;
+  color: #fff;
+  padding: 0.5rem 1rem;
+  font-weight: 800;
+  top: 1rem;
+  left: 1rem;
+  box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);
+}
+
 #setting {
   background-color: #198908;
   color: #fff;
