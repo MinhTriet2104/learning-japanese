@@ -1,0 +1,160 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  /* align-items: center; */
+  min-height: 100vh;
+  margin: 0;
+  /* background-color: #1e0555; */
+  /* background: rgb(155, 73, 216); */
+  background-image: radial-gradient(circle 248px at center, #16d9e3 0%, #30c7ec 47%, #46aef7 100%);
+}
+
+.container-wrapper {
+  margin-top: 9rem;
+}
+
+body,
+.quote-input {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.info .button-area {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+#setting {
+  background-color: #198908;
+  color: #fff;
+  padding: 0.7rem 3rem;
+  font-weight: 800;
+  top: calc(3.5rem + 1rem);
+  box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);
+}
+
+#ready {
+  background-color: #fb9a00;
+  color: #fff;
+  padding: 0.7rem 3rem;
+  font-weight: 800;
+  top: calc(3.5rem + 1rem);
+  box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);
+}
+
+.container {
+  background-color: #fff;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  width: 700px;
+  max-width: 90%;
+  box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);
+}
+
+.timer {
+  display: none;
+  position: absolute;
+  top: 3.5rem;
+  left: 5rem;
+  font-size: 3rem;
+  font-weight: bold;
+  color: #f0db4f;
+}
+
+.score {
+  position: absolute;
+  top: 3.5rem;
+  right: 5rem;
+  font-size: 3rem;
+  font-weight: bold;
+  color: #f0db4f;
+}
+
+.score::before {
+  content: "Score: ";
+}
+
+.quote-display {
+  margin-bottom: 1rem;
+  margin-left: calc(1rem + 2px);
+  margin-right: calc(1rem + 2px);
+  font-size: 1.4rem;
+  line-height: 2rem;
+  font-weight: 600;
+  word-spacing: 0.4rem;
+  user-select: none;
+  color: #47366c;
+}
+
+.quote-input {
+  background-color: transparent;
+  border: 2px solid #9ca0f8;
+  outline: none;
+  width: 100%;
+  height: 8rem;
+  margin: auto;
+  resize: none;
+  padding: 0.5rem 1rem;
+  font-size: 1.4rem;
+  line-height: 2rem;
+  word-spacing: 0.4rem;
+  border-radius: 0.3rem;
+  color: #47366c;
+}
+
+.quote-input:focus {
+  border-color: #6a45b9;
+}
+
+.correct {
+  color: #0f9f55;
+}
+
+.incorrect {
+  color: red;
+  text-decoration: underline;
+}
+
+@media (max-width: 600px) {
+  body {
+    background: rgb(121, 163, 248);
+    background: linear-gradient(
+      180deg,
+      rgba(121, 163, 248, 1) 0%,
+      rgba(147, 194, 240, 1) 61%,
+      rgba(176, 228, 231, 1) 91%
+    );
+
+    justify-content: center;
+  }
+
+  .container-wrapper {
+    margin-top: 0;
+  }
+
+  .container {
+    width: 100%;
+  }
+
+  #ready,
+  #setting {
+    border-radius: 50px;
+  }
+
+  .score,
+  .timer {
+    font-size: 2rem;
+    top: 0.5rem;
+    right: 1rem;
+    color: #ffffff;
+  }
+
+  .quote-input {
+    height: 10rem;
+  }
+}

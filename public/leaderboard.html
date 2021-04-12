@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>N5 Learning - Game</title>
+
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+    />
+    <link rel="stylesheet" href="css/styles.css" />
+
+    <!-- update the version number as needed -->
+    <script defer src="/__/firebase/8.3.3/firebase-app.js"></script>
+    <!-- include only the Firebase features as you need -->
+    <script defer src="/__/firebase/8.3.3/firebase-auth.js"></script>
+    <script defer src="/__/firebase/8.3.3/firebase-database.js"></script>
+    <script defer src="/__/firebase/8.3.3/firebase-firestore.js"></script>
+    <script defer src="/__/firebase/8.3.3/firebase-messaging.js"></script>
+    <script defer src="/__/firebase/8.3.3/firebase-storage.js"></script>
+    <!-- initialize the SDK after all desired features are loaded -->
+    <script defer src="/__/firebase/init.js"></script>
+  </head>
+  <body>
+    <div class="container">
+      <table>
+        <tr>
+          <th>Rank</th>
+          <th>Name</th>
+          <th>Date</th>
+          <th>Score</th>
+        </tr>
+      </table>
+    </div>
+  </body>
+  <script defer>
+    document.addEventListener("DOMContentLoaded", function() {
+      const tableElement = document.querySelector("table");
+      const db = firebase.firestore();
+      let i = 1;
+
+      db.collection("users")
+        .orderBy("score", "desc")
+        .get()
+        .then(querySnapshot => {
+          querySnapshot.forEach(doc => {
+            const trElement = document.createElement("tr");
+            const rankElement = document.createElement("td");
+            const nameElement = document.createElement("td");
+            const dateElement = document.createElement("td");
+            const scoreElement = document.createElement("td");
+
+            const date = doc
+              .data()
+              .date.toDate()
+              .toString();
+
+            rankElement.innerText = i;
+            nameElement.innerText = doc.data().name;
+            dateElement.innerText = date.split("G")[0];
+            scoreElement.innerText = doc.data().score;
+
+            trElement.appendChild(rankElement);
+            trElement.appendChild(nameElement);
+            trElement.appendChild(dateElement);
+            trElement.appendChild(scoreElement);
+
+            tableElement.appendChild(trElement);
+            i++;
+          });
+        });
+    });
+  </script>
+</html>
