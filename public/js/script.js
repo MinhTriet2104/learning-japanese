@@ -6,24 +6,41 @@ function getRandomIntInclusive(min, max) {
 
 document.addEventListener("DOMContentLoaded", function() {
   // const RANDOM_QUOTE_API_URL = "https://api.quotable.io/random";
+  const shortHiraganaArray = ['あ', 'い', 'う', 'え', 'お'];
+
   const hiraganaArray = [
+    //  a
     'あ', 'い', 'う', 'え', 'お',
+    //  ka
     'か', 'き', 'く', 'け', 'こ',
+    //  sa
     'さ', 'し', 'す', 'せ', 'そ',
+    //  ta
     'た', 'ち', 'つ', 'て', 'と',
+    //  na
     'な', 'に', 'ぬ', 'ね', 'の',
+    //  ha
     'は', 'ひ', 'ふ', 'へ', 'ほ',
+    //  ma
     'ま', 'み', 'む', 'め', 'も',
+    //  ya
     'や',       'ゆ',      'よ',
+    //  ri
     'ら', 'り', 'る', 'れ', 'ろ',
+    //  wa
     'わ',                  'を', 'ん',
   ];
 
   const hiraganaWithTenTenAndMaruArray = [
+    //  ga
     'が', 'ぎ', 'ぐ', 'げ', 'ご',
+    //  za
     'ざ', 'じ', 'ず', 'ぜ', 'ぞ',
+    //  da
     'だ', 'ぢ', 'づ', 'で', 'ど',
+    //  ba
     'ば', 'び', 'ぶ', 'べ', 'ぼ',
+    //  pa
     'ぱ', 'ぴ', 'ぷ', 'ぺ', 'ぽ',
   ];
 
@@ -54,9 +71,35 @@ document.addEventListener("DOMContentLoaded", function() {
     'ぴゃ', 'ぴゅ', 'ぴょ', 
   ];
 
+  const smallTsu = 'っ';
+
+  const katakanaArray = [
+    'ア', 'イ', 'ウ', 'エ', 'オ',
+    'カ', 'キ', 'ク', 'ケ', 'コ',
+    'サ', 'シ', 'ス', 'セ', 'ソ',
+    'タ', 'チ', 'ツ', 'テ', 'ト',
+    'ナ', 'ニ', 'ヌ', 'ネ', 'ノ',
+    'ハ', 'ヒ', 'フ', 'ヘ', 'ホ',
+    'マ', 'ミ', 'ム', 'メ', 'モ',
+    'ヤ',       'ユ',      'ヨ',
+    'ラ', 'リ', 'ル', 'レ', 'ロ',
+    'ワ',                  'ヲ', 'ン',
+  ];
+
+  const katakanaWithTenTenAndMaruArray = [
+    'ガ', 'ギ', 'グ', 'ゲ', 'ゴ',
+    'ザ', 'ジ', 'ズ', 'ゼ', 'ゾ',
+    'ダ', 'ヂ', 'ヅ', 'デ', 'ド',
+    'バ', 'ビ', 'ブ', 'ベ', 'ボ',
+    'パ', 'ピ', 'プ', 'ペ', 'ポ',
+  ];
+
   const hiraganaLength = hiraganaArray.length;
   const hiraganaWithTentenAndMaruLength = hiraganaWithTenTenAndMaruArray.length;
   const hiraganaCombinationLength = hiraganaCombinationArray.length;
+
+  const katakanaLength = hiraganaCombinationArray.length;
+  const katakanaWithTentenAndMaruLength = katakanaWithTenTenAndMaruArray.length;
 
   // array use to random when play
   let generateArray = [];
@@ -73,6 +116,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
   const tentenAndMaruCheckbox = document.getElementById('enableTenTenAndMaru');
   const combinationCheckbox = document.getElementById('enableCombination');
+  const smallTsuCheckbox = document.getElementById('enableSmallTsu');
   const timeLimitCheckbox = document.getElementById('enableTimeLimit');
 
   if (localStorage.getItem('tentenmaru')) {
@@ -85,6 +129,12 @@ document.addEventListener("DOMContentLoaded", function() {
     combinationCheckbox.checked = (localStorage.getItem('combination') === 'true');
   } else {
     combinationCheckbox.checked = true;
+  }
+
+  if (localStorage.getItem('smalltsu')) {
+    smallTsuCheckbox.checked = (localStorage.getItem('smalltsu') === 'true');
+  } else {
+    smallTsuCheckbox.checked = true;
   }
 
   // Handle Ready
@@ -119,30 +169,43 @@ document.addEventListener("DOMContentLoaded", function() {
       if (combinationCheckbox.checked) {
         generateArray = [...generateArray, ...hiraganaCombinationArray];
       }
+      if (smallTsuCheckbox.checked) {
+        generateArray.push(smallTsu);
+      }
       const generateArrayLength = generateArray.length;
 
       // const quote = await getRandomQuote();
-      const quoteWordLength = getRandomIntInclusive(5, 7);
+      const quoteWordLength = getRandomIntInclusive(5, 8);
 
       const arrayToCheck = [];
-      let quote = "";
+      // let quote = "";
       for (let i = 0; i < quoteWordLength; i++) {
-        const quoteTextLength = getRandomIntInclusive(2, 5);
+        const quoteTextLength = getRandomIntInclusive(3, 5);
         for (let j = 0; j < quoteTextLength; j++) {
-          const randomIndex = getRandomIntInclusive(0, generateArrayLength - 1);
-          const hiraganaWord = generateArray[randomIndex];
-          quote += hiraganaWord;
+          // not get small tsu at first letter
+          const sub = j !== 0 ? 1 : 2;
+          const randomIndex = getRandomIntInclusive(0, generateArrayLength - sub);
+          let hiraganaWord = generateArray[randomIndex];
+          // handle smallTsu
+          if (hiraganaWord === smallTsu) {
+            // not get a, i, u, e, o & small tsu
+            const randomIndexForSmallTsu = getRandomIntInclusive(5, generateArrayLength - 2);
+            const hiraganaWordAfterSmallTsu = generateArray[randomIndexForSmallTsu];
+
+            hiraganaWord += hiraganaWordAfterSmallTsu;
+          }
+          // quote += hiraganaWord;
 
           arrayToCheck.push(hiraganaWord);
           romajiArray.push(wanakana.toRomaji(hiraganaWord));
         }
         if (i !== quoteWordLength - 1) {
-          quote += " ";
+          // quote += " ";
           arrayToCheck.push(" ");
           romajiArray.push(" ");
         }
       }
-      quote += ".";
+      // quote += ".";
       arrayToCheck.push(".");
       romajiArray.push(".");
 
@@ -247,6 +310,12 @@ document.addEventListener("DOMContentLoaded", function() {
       localStorage.setItem('combination', true);
     } else {
       localStorage.setItem('combination', false);
+    }
+
+    if (smallTsuCheckbox.checked) {
+      localStorage.setItem('smalltsu', true);
+    } else {
+      localStorage.setItem('smalltsu', false);
     }
   });
 });

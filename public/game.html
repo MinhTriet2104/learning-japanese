@@ -41,7 +41,7 @@
 
       <div class="container mt-5">
         <div class="quote-display" id="quoteDisplay">Hiragana...</div>
-        <textarea class="quote-input" id="quoteInput" disabled>Romaji...</textarea>
+        <textarea spellcheck="false" class="quote-input" id="quoteInput" disabled>Romaji...</textarea>
       </div>
 
       <!-- Setting Modal -->
@@ -59,10 +59,16 @@
                 <label class="form-check-label" for="enableTenTenAndMaru">Enable tenten & maru (ば, ぱ,...)</label>
               </div>
 
-              <!-- time limit -->
+              <!-- combination -->
               <div class="form-check form-switch">
                 <input class="form-check-input" type="checkbox" id="enableCombination">
                 <label class="form-check-label" for="enableCombination">Enable Combination (きゃ, みゅ, しょ,...)</label>
+              </div>
+
+              <!-- small tsu -->
+              <div class="form-check form-switch">
+                <input class="form-check-input" type="checkbox" id="enableSmallTsu">
+                <label class="form-check-label" for="enableSmallTsu">Enable small tsu (っ)</label>
               </div>
 
               <!-- time limit -->
