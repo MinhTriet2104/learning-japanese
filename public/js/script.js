@@ -4,102 +4,95 @@ function getRandomIntInclusive(min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min); //The maximum is inclusive and the minimum is inclusive
 }
 
-document.addEventListener("DOMContentLoaded", function() {
+const shortHiraganaArray = ['あ', 'い', 'う', 'え', 'お'];
+
+const hiraganaArray = [
+  //  a
+  'あ', 'い', 'う', 'え', 'お',
+  //  ka
+  'か', 'き', 'く', 'け', 'こ',
+  //  sa
+  'さ', 'し', 'す', 'せ', 'そ',
+  //  ta
+  'た', 'ち', 'つ', 'て', 'と',
+  //  na
+  'な', 'に', 'ぬ', 'ね', 'の',
+  //  ha
+  'は', 'ひ', 'ふ', 'へ', 'ほ',
+  //  ma
+  'ま', 'み', 'む', 'め', 'も',
+  //  ya
+  'や',       'ゆ',      'よ',
+  //  ri
+  'ら', 'り', 'る', 'れ', 'ろ',
+  //  wa
+  'わ',                  'を', 'ん',
+];
+
+const hiraganaWithTenTenAndMaruArray = [
+  //  ga
+  'が', 'ぎ', 'ぐ', 'げ', 'ご',
+  //  za
+  'ざ', 'じ', 'ず', 'ぜ', 'ぞ',
+  //  da
+  'だ', 'ぢ', 'づ', 'で', 'ど',
+  //  ba
+  'ば', 'び', 'ぶ', 'べ', 'ぼ',
+  //  pa
+  'ぱ', 'ぴ', 'ぷ', 'ぺ', 'ぽ',
+];
+
+const hiraganaCombinationArray = [
+  // ki
+  'きゃ', 'きゅ', 'きょ', 
+  // shi
+  'しゃ', 'しゅ', 'しょ', 
+  // chi
+  'ちゃ', 'ちゅ', 'ちょ', 
+  // ni
+  'にゃ', 'にゅ', 'にょ', 
+  // hi
+  'ひゃ', 'ひゅ', 'ひょ', 
+  // mi
+  'みゃ', 'みゅ', 'みょ', 
+  // ri
+  'りゃ', 'りゅ', 'りょ', 
+  // gi
+  'ぎゃ', 'ぎゅ', 'ぎょ',
+  // ji 
+  'じゃ', 'じゅ', 'じょ', 
+  // ji
+  'ぢゃ', 'ぢゅ', 'ぢょ', 
+  // bi
+  'びゃ', 'びゅ', 'びょ', 
+  // pi
+  'ぴゃ', 'ぴゅ', 'ぴょ', 
+];
+
+const smallTsuHirgana = "っ";
+
+const katakanaArray = hiraganaArray.map((char) => wanakana.toKatakana(char));
+
+const katakanaWithTenTenAndMaruArray = hiraganaWithTenTenAndMaruArray.map(
+  (char) => wanakana.toKatakana(char)
+);
+
+const katakanaCombinationArray = hiraganaCombinationArray.map((char) =>
+  wanakana.toKatakana(char)
+);
+
+const smallTsuKatakana = wanakana.toKatakana(smallTsuHirgana);
+
+const hiraganaLength = hiraganaArray.length;
+const hiraganaWithTentenAndMaruLength = hiraganaWithTenTenAndMaruArray.length;
+const hiraganaCombinationLength = hiraganaCombinationArray.length;
+
+const katakanaLength = hiraganaCombinationArray.length;
+const katakanaWithTentenAndMaruLength = katakanaWithTenTenAndMaruArray.length;
+const katakanaCombinationLength = hiraganaCombinationArray.length;
+
+document.addEventListener("DOMContentLoaded", function () {
   // const RANDOM_QUOTE_API_URL = "https://api.quotable.io/random";
-  const shortHiraganaArray = ['あ', 'い', 'う', 'え', 'お'];
-
-  const hiraganaArray = [
-    //  a
-    'あ', 'い', 'う', 'え', 'お',
-    //  ka
-    'か', 'き', 'く', 'け', 'こ',
-    //  sa
-    'さ', 'し', 'す', 'せ', 'そ',
-    //  ta
-    'た', 'ち', 'つ', 'て', 'と',
-    //  na
-    'な', 'に', 'ぬ', 'ね', 'の',
-    //  ha
-    'は', 'ひ', 'ふ', 'へ', 'ほ',
-    //  ma
-    'ま', 'み', 'む', 'め', 'も',
-    //  ya
-    'や',       'ゆ',      'よ',
-    //  ri
-    'ら', 'り', 'る', 'れ', 'ろ',
-    //  wa
-    'わ',                  'を', 'ん',
-  ];
-
-  const hiraganaWithTenTenAndMaruArray = [
-    //  ga
-    'が', 'ぎ', 'ぐ', 'げ', 'ご',
-    //  za
-    'ざ', 'じ', 'ず', 'ぜ', 'ぞ',
-    //  da
-    'だ', 'ぢ', 'づ', 'で', 'ど',
-    //  ba
-    'ば', 'び', 'ぶ', 'べ', 'ぼ',
-    //  pa
-    'ぱ', 'ぴ', 'ぷ', 'ぺ', 'ぽ',
-  ];
-
-  const hiraganaCombinationArray = [
-    // ki
-    'きゃ', 'きゅ', 'きょ', 
-    // shi
-    'しゃ', 'しゅ', 'しょ', 
-    // chi
-    'ちゃ', 'ちゅ', 'ちょ', 
-    // ni
-    'にゃ', 'にゅ', 'にょ', 
-    // hi
-    'ひゃ', 'ひゅ', 'ひょ', 
-    // mi
-    'みゃ', 'みゅ', 'みょ', 
-    // ri
-    'りゃ', 'りゅ', 'りょ', 
-    // gi
-    'ぎゃ', 'ぎゅ', 'ぎょ',
-    // ji 
-    'じゃ', 'じゅ', 'じょ', 
-    // ji
-    'ぢゃ', 'ぢゅ', 'ぢょ', 
-    // bi
-    'びゃ', 'びゅ', 'びょ', 
-    // pi
-    'ぴゃ', 'ぴゅ', 'ぴょ', 
-  ];
-
-  const smallTsu = 'っ';
-
-  const katakanaArray = [
-    'ア', 'イ', 'ウ', 'エ', 'オ',
-    'カ', 'キ', 'ク', 'ケ', 'コ',
-    'サ', 'シ', 'ス', 'セ', 'ソ',
-    'タ', 'チ', 'ツ', 'テ', 'ト',
-    'ナ', 'ニ', 'ヌ', 'ネ', 'ノ',
-    'ハ', 'ヒ', 'フ', 'ヘ', 'ホ',
-    'マ', 'ミ', 'ム', 'メ', 'モ',
-    'ヤ',       'ユ',      'ヨ',
-    'ラ', 'リ', 'ル', 'レ', 'ロ',
-    'ワ',                  'ヲ', 'ン',
-  ];
-
-  const katakanaWithTenTenAndMaruArray = [
-    'ガ', 'ギ', 'グ', 'ゲ', 'ゴ',
-    'ザ', 'ジ', 'ズ', 'ゼ', 'ゾ',
-    'ダ', 'ヂ', 'ヅ', 'デ', 'ド',
-    'バ', 'ビ', 'ブ', 'ベ', 'ボ',
-    'パ', 'ピ', 'プ', 'ペ', 'ポ',
-  ];
-
-  const hiraganaLength = hiraganaArray.length;
-  const hiraganaWithTentenAndMaruLength = hiraganaWithTenTenAndMaruArray.length;
-  const hiraganaCombinationLength = hiraganaCombinationArray.length;
-
-  const katakanaLength = hiraganaCombinationArray.length;
-  const katakanaWithTentenAndMaruLength = katakanaWithTenTenAndMaruArray.length;
 
   // array use to random when play
   let generateArray = [];
@@ -112,27 +105,42 @@ document.addEventListener("DOMContentLoaded", function() {
   const scoreElement = document.getElementById("score");
   const readyButton = document.getElementById("ready");
   const settingButton = document.getElementById("setting");
+  const refreshButton = document.getElementById("refresh");
   const saveSettingButton = document.getElementById("saveSetting");
 
-  const tentenAndMaruCheckbox = document.getElementById('enableTenTenAndMaru');
-  const combinationCheckbox = document.getElementById('enableCombination');
-  const smallTsuCheckbox = document.getElementById('enableSmallTsu');
-  const timeLimitCheckbox = document.getElementById('enableTimeLimit');
+  const hiraganaRadio = document.getElementById("radioHiragana");
+  const katakanaRadio = document.getElementById("radioKatakana");
 
-  if (localStorage.getItem('tentenmaru')) {
-    tentenAndMaruCheckbox.checked = (localStorage.getItem('tentenmaru') === 'true');
+  const tentenAndMaruCheckbox = document.getElementById("enableTenTenAndMaru");
+  const combinationCheckbox = document.getElementById("enableCombination");
+  const smallTsuCheckbox = document.getElementById("enableSmallTsu");
+  const timeLimitCheckbox = document.getElementById("enableTimeLimit");
+
+  if (localStorage.getItem("isHiragana")) {
+    if (localStorage.getItem("isHiragana") === "true")
+      hiraganaRadio.checked = true;
+    else
+      katakanaRadio.checked = true;
+  } else {
+    hiraganaRadio.checked = true;
+  }
+
+  if (localStorage.getItem("tentenmaru")) {
+    tentenAndMaruCheckbox.checked =
+      localStorage.getItem("tentenmaru") === "true";
   } else {
     tentenAndMaruCheckbox.checked = true;
   }
 
-  if (localStorage.getItem('combination')) {
-    combinationCheckbox.checked = (localStorage.getItem('combination') === 'true');
+  if (localStorage.getItem("combination")) {
+    combinationCheckbox.checked =
+      localStorage.getItem("combination") === "true";
   } else {
     combinationCheckbox.checked = true;
   }
 
-  if (localStorage.getItem('smalltsu')) {
-    smallTsuCheckbox.checked = (localStorage.getItem('smalltsu') === 'true');
+  if (localStorage.getItem("smalltsu")) {
+    smallTsuCheckbox.checked = localStorage.getItem("smalltsu") === "true";
   } else {
     smallTsuCheckbox.checked = true;
   }
@@ -162,12 +170,29 @@ document.addEventListener("DOMContentLoaded", function() {
       generateArray.length = 0;
       romajiArray.length = 0;
 
-      generateArray = hiraganaArray;
+      let chosedArray;
+      let chosedTenTenAndMaruArray;
+      let chosedCombinationArray;
+      let smallTsu;
+
+      if (hiraganaRadio.checked) {
+        chosedArray = hiraganaArray;
+        chosedTenTenAndMaruArray = hiraganaWithTenTenAndMaruArray;
+        chosedCombinationArray = hiraganaCombinationArray;
+        smallTsu = smallTsuHirgana;
+      } else {
+        chosedArray = katakanaArray;
+        chosedTenTenAndMaruArray = katakanaWithTenTenAndMaruArray;
+        chosedCombinationArray = katakanaCombinationArray;
+        smallTsu = smallTsuKatakana;
+      }
+
+      generateArray = chosedArray;
       if (tentenAndMaruCheckbox.checked) {
-        generateArray = [...generateArray, ...hiraganaWithTenTenAndMaruArray];
+        generateArray = [...generateArray, ...chosedTenTenAndMaruArray];
       }
       if (combinationCheckbox.checked) {
-        generateArray = [...generateArray, ...hiraganaCombinationArray];
+        generateArray = [...generateArray, ...chosedCombinationArray];
       }
       if (smallTsuCheckbox.checked) {
         generateArray.push(smallTsu);
@@ -184,13 +209,20 @@ document.addEventListener("DOMContentLoaded", function() {
         for (let j = 0; j < quoteTextLength; j++) {
           // not get small tsu at first letter
           const sub = j !== 0 ? 1 : 2;
-          const randomIndex = getRandomIntInclusive(0, generateArrayLength - sub);
+          const randomIndex = getRandomIntInclusive(
+            0,
+            generateArrayLength - sub
+          );
           let hiraganaWord = generateArray[randomIndex];
           // handle smallTsu
           if (hiraganaWord === smallTsu) {
             // not get a, i, u, e, o & small tsu
-            const randomIndexForSmallTsu = getRandomIntInclusive(5, generateArrayLength - 2);
-            const hiraganaWordAfterSmallTsu = generateArray[randomIndexForSmallTsu];
+            const randomIndexForSmallTsu = getRandomIntInclusive(
+              5,
+              generateArrayLength - 2
+            );
+            const hiraganaWordAfterSmallTsu =
+              generateArray[randomIndexForSmallTsu];
 
             hiraganaWord += hiraganaWordAfterSmallTsu;
           }
@@ -211,13 +243,13 @@ document.addEventListener("DOMContentLoaded", function() {
 
       fail = 0;
       quoteDisplayElement.innerHTML = "";
-      arrayToCheck.forEach(char => {
+      arrayToCheck.forEach((char) => {
         const charSpan = document.createElement("span");
         charSpan.innerText = char;
         quoteDisplayElement.appendChild(charSpan);
       });
       quoteInputElement.value = "";
-      console.log(`Answer: "${romajiArray.join('')}"`);
+      console.log(`Answer: "${romajiArray.join("")}"`);
     }
 
     async function startTimer() {
@@ -233,13 +265,13 @@ document.addEventListener("DOMContentLoaded", function() {
             .add({
               name: name,
               score: score,
-              date: new Date()
+              date: new Date(),
             })
-            .then(function(docRef) {
+            .then(function (docRef) {
               console.log("Document written with ID: ", docRef.id);
               location.replace("leaderboard.html");
             })
-            .catch(function(error) {
+            .catch(function (error) {
               console.error("Error adding document: ", error);
             });
         }
@@ -251,7 +283,7 @@ document.addEventListener("DOMContentLoaded", function() {
       const arrayDisplay = document.querySelectorAll("span");
       const arrayInput = quoteInputElement.value.split("");
       let corect = true;
-      
+
       let sumPrevRomajiLength = 0;
       romajiArray.forEach((romaji, index) => {
         if (index === 0) {
@@ -261,7 +293,11 @@ document.addEventListener("DOMContentLoaded", function() {
         }
 
         let char = "";
-        for (let i = sumPrevRomajiLength; i < sumPrevRomajiLength + romaji.length; i++) {
+        for (
+          let i = sumPrevRomajiLength;
+          i < sumPrevRomajiLength + romaji.length;
+          i++
+        ) {
           if (!arrayInput[i]) {
             char = false;
             break;
@@ -292,7 +328,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     readyButton.style.display = "none";
     settingButton.style.display = "none";
-    quoteInputElement.removeAttribute('disabled');
+    quoteInputElement.removeAttribute("disabled");
     quoteInputElement.focus();
     renderNewQuote();
     startTime && startTimer();
@@ -300,22 +336,38 @@ document.addEventListener("DOMContentLoaded", function() {
 
   // Handle Setting
   saveSettingButton.addEventListener("click", () => {
-    if (tentenAndMaruCheckbox.checked) {
-      localStorage.setItem('tentenmaru', true);
+    if (hiraganaRadio.checked) {
+      localStorage.setItem("isHirgana", true);
     } else {
-      localStorage.setItem('tentenmaru', false);
+      localStorage.setItem("isHirgana", false);
+    }
+
+    if (tentenAndMaruCheckbox.checked) {
+      localStorage.setItem("tentenmaru", true);
+    } else {
+      localStorage.setItem("tentenmaru", false);
     }
 
     if (combinationCheckbox.checked) {
-      localStorage.setItem('combination', true);
+      localStorage.setItem("combination", true);
     } else {
-      localStorage.setItem('combination', false);
+      localStorage.setItem("combination", false);
     }
 
     if (smallTsuCheckbox.checked) {
-      localStorage.setItem('smalltsu', true);
+      localStorage.setItem("smalltsu", true);
     } else {
-      localStorage.setItem('smalltsu', false);
+      localStorage.setItem("smalltsu", false);
     }
+  });
+
+  refreshButton.addEventListener("click", () => {
+    readyButton.style.display = "inline-block";
+    settingButton.style.display = "inline-block";
+
+    scoreElement.innerText = 0;
+    quoteDisplayElement.innerText = "Hiragana...";
+    quoteInputElement.value = "Romaji...";
+    quoteInputElement.setAttribute("disabled", true);
   });
 });

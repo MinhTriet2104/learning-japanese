@@ -6,6 +6,7 @@
     <title>N5 Learning - Game</title>
 
     <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
     <link rel="stylesheet" href="css/styles.css" />
 
     <!-- update the version number as needed -->
@@ -26,7 +27,13 @@
     <script defer src="js/script.js"></script>
   </head>
   <body>
-    <button id="help" class="btn" data-bs-toggle="modal" data-bs-target="#helpModal">HELP!</button>
+    <button id="help" class="btn" data-bs-toggle="modal" data-bs-target="#helpModal">
+      <i class="fa fa-lightbulb-o" aria-hidden="true"></i>
+    </button>
+
+    <button id="refresh" class="btn">
+      <i class="fa fa-refresh" aria-hidden="true"></i>
+    </button>
 
     <div class="timer" id="timer">0</div>
     <div class="score" id="score">0</div>
@@ -53,6 +60,16 @@
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
+              <!-- hiragana or katakana -->
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="radioHiragana" value="hiragana" checked>
+                <label class="form-check-label" for="radioHiragana">Hiragana</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="radioKatakana" value="katakana">
+                <label class="form-check-label" for="radioKatakana">Katakana</label>
+              </div>
+
               <!-- tenten & maru -->
               <div class="form-check form-switch">
                 <input class="form-check-input" type="checkbox" id="enableTenTenAndMaru">
@@ -90,11 +107,12 @@
         <div class="modal-dialog modal-dialog-centered">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="helpModalTitle">Hiragana Alphabet</h5>
+              <h5 class="modal-title" id="helpModalTitle">Hiragana & Katakana Alphabet</h5>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
               <img src="img/hiragana.gif" class="img-fluid" alt="hiragana-alphabet" />
+              <img src="img/KATAKANA.jpg" class="img-fluid" alt="hiragana-alphabet" />
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
