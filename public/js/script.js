@@ -99,6 +99,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   const quoteDisplayElement = document.getElementById("quoteDisplay");
   const quoteInputElement = document.getElementById("quoteInput");
+
   const timerElement = document.getElementById("timer");
   const scoreElement = document.getElementById("score");
   const readyButton = document.getElementById("ready");
@@ -114,14 +115,20 @@ document.addEventListener("DOMContentLoaded", function () {
   const smallTsuCheckbox = document.getElementById("enableSmallTsu");
   const timeLimitCheckbox = document.getElementById("enableTimeLimit");
 
+  let chosedJapaneseAlphabet = "Hiragana...";
   if (localStorage.getItem("isHiragana")) {
-    if (localStorage.getItem("isHiragana") === "true")
+    if (localStorage.getItem("isHiragana") === "true") {
       hiraganaRadio.checked = true;
-    else
+      chosedJapaneseAlphabet = "Hiragana...";
+    }
+    else {
       katakanaRadio.checked = true;
+      chosedJapaneseAlphabet = "Katakana...";
+    }
   } else {
     hiraganaRadio.checked = true;
   }
+  quoteDisplayElement.innerText = chosedJapaneseAlphabet;
 
   if (localStorage.getItem("tentenmaru")) {
     tentenAndMaruCheckbox.checked =
@@ -336,9 +343,12 @@ document.addEventListener("DOMContentLoaded", function () {
   saveSettingButton.addEventListener("click", () => {
     if (hiraganaRadio.checked) {
       localStorage.setItem("isHiragana", true);
+      chosedJapaneseAlphabet = "Hiragana...";
     } else {
       localStorage.setItem("isHiragana", false);
+      chosedJapaneseAlphabet = "Katakana...";
     }
+    quoteDisplayElement.innerText = chosedJapaneseAlphabet;
 
     if (tentenAndMaruCheckbox.checked) {
       localStorage.setItem("tentenmaru", true);
@@ -364,7 +374,7 @@ document.addEventListener("DOMContentLoaded", function () {
     settingButton.style.display = "inline-block";
 
     scoreElement.innerText = 0;
-    quoteDisplayElement.innerText = "Hiragana...";
+    quoteDisplayElement.innerText = chosedJapaneseAlphabet;
     quoteInputElement.value = "Romaji...";
     quoteInputElement.setAttribute("disabled", true);
   });
