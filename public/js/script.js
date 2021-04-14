@@ -337,9 +337,9 @@ document.addEventListener("DOMContentLoaded", function () {
   // Handle Setting
   saveSettingButton.addEventListener("click", () => {
     if (hiraganaRadio.checked) {
-      localStorage.setItem("isHirgana", true);
+      localStorage.setItem("isHiragana", true);
     } else {
-      localStorage.setItem("isHirgana", false);
+      localStorage.setItem("isHiragana", false);
     }
 
     if (tentenAndMaruCheckbox.checked) {
