@@ -4,8 +4,6 @@ function getRandomIntInclusive(min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min); //The maximum is inclusive and the minimum is inclusive
 }
 
-const shortHiraganaArray = ['あ', 'い', 'う', 'え', 'お'];
-
 const hiraganaArray = [
   //  a
   'あ', 'い', 'う', 'え', 'お',
@@ -187,7 +185,7 @@ document.addEventListener("DOMContentLoaded", function () {
         smallTsu = smallTsuKatakana;
       }
 
-      generateArray = chosedArray;
+      generateArray = [...chosedArray];
       if (tentenAndMaruCheckbox.checked) {
         generateArray = [...generateArray, ...chosedTenTenAndMaruArray];
       }
