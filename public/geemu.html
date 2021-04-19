@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>ゲーム</title>
+
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="css/styles.css" />
+
+    <!-- update the version number as needed -->
+    <script defer src="/__/firebase/8.3.3/firebase-app.js"></script>
+    <!-- include only the Firebase features as you need -->
+    <script defer src="/__/firebase/8.3.3/firebase-auth.js"></script>
+    <script defer src="/__/firebase/8.3.3/firebase-database.js"></script>
+    <script defer src="/__/firebase/8.3.3/firebase-messaging.js"></script>
+    <script defer src="/__/firebase/8.3.3/firebase-storage.js"></script>
+    <!-- initialize the SDK after all desired features are loaded -->
+    <script defer src="/__/firebase/init.js"></script>
+    <!-- my script -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://unpkg.com/@popperjs/core@2"></script>
+
+    <script defer src="js/bootstrap.bundle.min.js" ></script>
+    <script defer src="js/wanakana.min.js"></script>
+    <script defer src="js/script.js"></script>
+  </head>
+  <body>
+    <button id="help" class="btn" data-bs-toggle="modal" data-bs-target="#helpModal">
+      <i class="fa fa-lightbulb-o" aria-hidden="true"></i>
+    </button>
+
+    <button id="refresh" class="btn">
+      <i class="fa fa-refresh" aria-hidden="true"></i>
+    </button>
+
+    <div class="timer" id="timer">0</div>
+    <div class="score" id="score">0</div>
+
+    <div class="container-wrapper">
+      <div class="info">
+        <div class="button-area">
+          <button id="ready" class="btn">READY</button>
+          <button id="setting" class="btn mt-3" data-bs-toggle="modal" data-bs-target="#settingModal">Setting</button>
+        </div>
+      </div>
+
+      <div class="container mt-5">
+        <div class="quote-display" id="quoteDisplay">Hiragana...</div>
+        <textarea spellcheck="false" class="quote-input" id="quoteInput" disabled>Romaji...</textarea>
+      </div>
+
+      <!-- Setting Modal -->
+      <div class="modal fade" id="settingModal" tabindex="-1" role="dialog" aria-labelledby="settingModalTitle" aria-hidden="true">
+        <div class="modal-dialog mt-5">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="settingModalTitle">Settings</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <!-- hiragana or katakana -->
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="radioHiragana" value="hiragana" checked>
+                <label class="form-check-label" for="radioHiragana">Hiragana</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="radioKatakana" value="katakana">
+                <label class="form-check-label" for="radioKatakana">Katakana</label>
+              </div>
+
+              <!-- tenten & maru -->
+              <div class="form-check form-switch">
+                <input class="form-check-input" type="checkbox" id="enableTenTenAndMaru">
+                <label class="form-check-label" for="enableTenTenAndMaru">Enable tenten & maru (ば, ぱ,...)</label>
+              </div>
+
+              <!-- combination -->
+              <div class="form-check form-switch">
+                <input class="form-check-input" type="checkbox" id="enableCombination">
+                <label class="form-check-label" for="enableCombination">Enable Combination (きゃ, みゅ, しょ,...)</label>
+              </div>
+
+              <!-- small tsu -->
+              <div class="form-check form-switch">
+                <input class="form-check-input" type="checkbox" id="enableSmallTsu">
+                <label class="form-check-label" for="enableSmallTsu">Enable small tsu (っ, ッ)</label>
+              </div>
+
+              <!-- time limit -->
+              <div class="form-check form-switch">
+                <input class="form-check-input" type="checkbox" id="enableTimeLimit">
+                <label class="form-check-label" for="enableTimeLimit">Enable time limit</label>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+              <button id="saveSetting" type="button" class="btn btn-primary" data-bs-dismiss="modal">OK</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Help Modal -->
+      <div class="modal fade" id="helpModal" tabindex="-1" role="dialog" aria-labelledby="helpModalTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="helpModalTitle">Hiragana & Katakana Alphabet</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <img src="img/hiragana.gif" class="img-fluid" alt="hiragana-alphabet" />
+              <img src="img/KATAKANA.jpg" class="img-fluid" alt="hiragana-alphabet" />
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+              <button id="saveSetting" type="button" class="btn btn-primary" data-bs-dismiss="modal">OK</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </body>
+</html>
