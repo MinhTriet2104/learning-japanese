@@ -139,7 +139,7 @@ const grammaArray = [
   },
   {
     vi: "Mỹ",
-    ja: "アメリア",
+    ja: "アメリカ",
   },
   {
     vi: "Anh",
